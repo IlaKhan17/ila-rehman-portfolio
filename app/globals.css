@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces — dark-first. Cool near-blacks so the violet accent reads clean. */
+  --color-base: #08080c;
+  --color-surface: #0d0d14;
+  --color-raised: #13131d;
+  --color-line: #23232f;
+  --color-line-strong: #33334a;
+
+  /* Text */
+  --color-ink: #ecebf2;
+  --color-ink-muted: #a3a2b4;
+  --color-ink-faint: #6e6d80;
+
+  /* Accent — deep violet */
+  --color-accent: #8b5cf6;
+  --color-accent-bright: #a78bfa;
+  --color-accent-dim: #6d3fd6;
+
+  /* Semantic, used sparingly by the console */
+  --color-signal: #34d399;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, "SF Mono", monospace;
+
+  --radius-card: 0.875rem;
+
+  --animate-caret: caret 1s steps(1) infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  --animate-rise: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes caret {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Faint orbital field — a quiet nod to the physics background.
+   Purely decorative, fixed, and cheap: two radial gradients, no canvas. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      42rem 42rem at 78% -6%,
+      color-mix(in oklab, var(--color-accent) 13%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      34rem 34rem at 6% 42%,
+      color-mix(in oklab, var(--color-accent-dim) 9%, transparent),
+      transparent 60%
+    );
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 38%, transparent);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-bright);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Respect reduced motion: the console renders complete and instantly. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
