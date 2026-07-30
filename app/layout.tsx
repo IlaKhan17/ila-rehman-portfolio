@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 
+import { Footer } from "@/components/site/footer";
+import { Nav } from "@/components/site/nav";
 import { profile, siteUrl } from "@/content/profile";
 
 import "./globals.css";
@@ -67,7 +69,9 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <Nav />
         {children}
+        <Footer />
       </body>
     </html>
   );
