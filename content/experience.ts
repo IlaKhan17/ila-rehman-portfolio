@@ -22,6 +22,8 @@ export const experience: Experience[] = [
     points: [
       "Design and build distributed, event-driven microservices on AWS (Lambda, ECS, Step Functions, SQS/SNS, S3, DynamoDB and RDS) for an end-to-end document-automation platform, deployed to ECR and Lambda across multiple AWS accounts.",
       "Integrate LLMs into production pipelines for extraction, classification and natural-language generation, with guardrails, deterministic fallbacks, and cost and latency controls.",
+      "Built a multi-tenant AI travel agent that runs over WhatsApp: Twilio into FastAPI, a LangChain tool loop against live flight inventory, PostgreSQL row-level security per tenant, and a deterministic conversation-memory layer so a booking survives a thread going quiet for days.",
+      "Diagnosed a 56% LLM tool-call failure rate on that agent from Braintrust traces, then removed it with a provider fallback and by grounding relative dates in code before they reach the model. Hardened the service to 274 tests under mypy --strict across more than 120 files.",
       "Engineer for reliability at scale: idempotent processing, exactly-once semantics, distributed state coordination, and graceful failure handling across asynchronous services.",
       "Drive observability: structured logging, correlation-ID tracing through CloudWatch, and alerting that surfaces and diagnoses issues quickly.",
       // TODO(ila): one number would make this section undeniable. Documents processed
@@ -32,6 +34,7 @@ export const experience: Experience[] = [
       "AWS",
       "Event-Driven Microservices",
       "LLMs in Production",
+      "Agent Tool Loops",
       "Distributed Systems",
       "Observability",
     ],

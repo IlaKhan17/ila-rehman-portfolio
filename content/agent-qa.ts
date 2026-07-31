@@ -28,7 +28,7 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "tool",
         call: "search_projects(featured=true)",
-        result: "3 results · Davis, Apriciate, AdaptQuiz API",
+        result: "2 results · Davis, AdaptQuiz API",
       },
       {
         type: "say",
@@ -42,7 +42,7 @@ export const consoleTurns: ConsoleTurn[] = [
         type: "say",
         text: "And it is not only side projects. She currently builds distributed, event-driven microservices on AWS with LLMs integrated into the production pipelines. That means guardrails, deterministic fallbacks and exactly-once semantics: the reliability work side projects never force you to learn. First Class Physics honours underneath that, and years teaching maths and code across the US, UK and Canada: the evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
       },
-      { type: "projects", slugs: ["davis", "apriciate", "adaptquiz"] },
+      { type: "projects", slugs: ["davis", "adaptquiz"] },
     ],
   },
   {
@@ -70,13 +70,13 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "tool",
         call: "search_projects()",
-        result: "4 results",
+        result: "3 results",
       },
       {
         type: "say",
-        text: "Four shipped projects, in order of depth:",
+        text: "Three shipped projects, in order of depth:",
       },
-      { type: "projects", slugs: ["davis", "apriciate", "adaptquiz", "focus-flow"] },
+      { type: "projects", slugs: ["davis", "adaptquiz", "focus-flow"] },
     ],
   },
   {
@@ -102,27 +102,6 @@ export const consoleTurns: ConsoleTurn[] = [
         text: "Next.js on Vercel, FastAPI on Railway, LangGraph for the multi-stage workflow, Groq for inference, Supabase for auth and Postgres, and Braintrust tracing over the whole pipeline.",
       },
       { type: "projects", slugs: ["davis"] },
-    ],
-  },
-  {
-    id: "apriciate",
-    prompt: "Tell me about Apriciate",
-    steps: [
-      { type: "thought", text: "Loading case study", detail: "apriciate" },
-      {
-        type: "tool",
-        call: "get_project('apriciate')",
-        result: "ok · 274 tests · mypy --strict",
-      },
-      {
-        type: "say",
-        text: "Apriciate is a multi-tenant travel agent that runs entirely over WhatsApp. Twilio delivers the message, FastAPI drives a LangChain tool loop, Duffel supplies live flight inventory, and tenants are isolated by PostgreSQL row-level security. Conversation state sits in a deterministic memory layer rather than in the model's context, so a thread can go quiet for days and resume mid-booking without the agent forgetting how many people are flying.",
-      },
-      {
-        type: "say",
-        text: "The story she would tell in an interview is the debugging. Braintrust traces showed a 56% tool-call failure rate that the logs had not surfaced at all. The fix was not prompt tinkering: it was grounding relative dates in code before they reached the model, and falling back from Groq to Claude on the calls where the fast model mangled structured arguments. Then 274 tests and mypy --strict across 120+ files, because this agent spends real money.",
-      },
-      { type: "projects", slugs: ["apriciate"] },
     ],
   },
   {
@@ -171,7 +150,7 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation, with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
+        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation, with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. She also built a multi-tenant AI travel agent there, running over WhatsApp against live flight inventory, where Braintrust traces exposed a 56% tool-call failure rate that logs had missed entirely. Grounding relative dates in code and falling back to a stronger model on the calls that failed removed it, and the service now carries 274 tests under mypy --strict. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
       },
       { type: "experience" },
     ],
@@ -216,7 +195,7 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "say",
         // TODO(ila): keep this current. A stale answer here is worse than none.
-        text: "Her day job, which is the document-automation platform at Manrke: distributed, event-driven microservices on AWS, and the work of making LLM steps inside those pipelines behave predictably. Guardrails, deterministic fallbacks, cost and latency controls, and the reliability side that decides whether any of it can be trusted at scale, meaning idempotent processing, exactly-once semantics and correlation-ID tracing that lets you follow one document through a dozen asynchronous services.",
+        text: "Her day job at Manrke: the document-automation platform, plus a multi-tenant AI travel agent on WhatsApp. Distributed, event-driven microservices on AWS, and the work of making LLM steps inside those pipelines behave predictably. Guardrails, deterministic fallbacks, cost and latency controls, and the reliability side that decides whether any of it can be trusted at scale, meaning idempotent processing, exactly-once semantics and correlation-ID tracing that lets you follow one document through a dozen asynchronous services.",
       },
       {
         type: "say",
