@@ -26,7 +26,7 @@ export function ExperienceSection() {
       <div className="space-y-10">
         {experience.map((item) => {
           const points = item.points.filter((point) => !isPlaceholder(point));
-          const period = real(item.period, "6+ years");
+          const period = real(item.period);
           const org = real(item.org, "Freelance");
 
           return (
@@ -35,7 +35,7 @@ export function ExperienceSection() {
               className="grid gap-4 sm:grid-cols-[10rem_1fr] sm:gap-8"
             >
               <div className="font-mono text-xs text-ink-faint">
-                <p>{period}</p>
+                {period && <p>{period}</p>}
                 <p className="mt-1">{item.kind}</p>
               </div>
 

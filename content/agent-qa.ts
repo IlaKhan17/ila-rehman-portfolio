@@ -32,11 +32,15 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "Because she has already shipped the thing most junior candidates only describe. AdaptQuiz is a production RAG API with retrieval grounding, structured outputs and an LLM-as-judge evaluation layer. Davis is a multi-agent pipeline with vector memory and a separate scraping microservice. Both are deployed, both are open source, and the code is legible.",
+        text: "Because she has already shipped the thing most junior candidates only describe. AdaptQuiz is a production RAG API with retrieval grounding, structured outputs and an LLM-as-judge evaluation layer. Davis is a multi-tenant AI sales agent where every score cites its evidence, sending is approval-gated, and tenant isolation is enforced by row-level security across 45 Postgres tables. Both are deployed, both are open source, and the code is legible.",
       },
       {
         type: "say",
-        text: "And she is not a generalist who read about AI last year. She has a First Class Physics honours degree, an MCA specialising in Educational Technology & Data Analytics, and six years teaching maths and code to students across the US, UK and Canada. The evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
+        text: "The detail worth noticing: she builds the boring parts. Deterministic scoring instead of asking a model for a number. An idempotency key so a retry cannot send twice. Rubric grading with per-criterion feedback instead of string matching. That is the difference between a demo and something you can put in front of users.",
+      },
+      {
+        type: "say",
+        text: "And she is not a generalist who read about AI last year. First Class Physics honours, an MCA specialising in Educational Technology & Data Analytics, an internship building multi-tenant backends, and years teaching maths and code to students across the US, UK and Canada. The evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
       },
       { type: "projects", slugs: ["davis", "adaptquiz"] },
     ],
@@ -49,11 +53,11 @@ export const consoleTurns: ConsoleTurn[] = [
       { type: "tool", call: "get_profile()", result: "ok" },
       {
         type: "say",
-        text: "Ila Rehman — an AI Engineer in Delhi, working remotely. She builds LLM applications: retrieval pipelines, multi-agent systems, and the evaluation layers that tell you whether any of it actually works.",
+        text: "Ila Rehman — an AI Engineer in Delhi, working remotely. She builds LLM-powered applications and agentic systems: retrieval pipelines, multi-tenant agents, and the evaluation layers that tell you whether any of it actually works.",
       },
       {
         type: "say",
-        text: "Physics first, then six years teaching, then an EdTech master's, now engineering. Each step fed the next.",
+        text: "Physics first, then years of teaching, then an EdTech master's, then an internship on multi-tenant backends, now engineering full time. Each step fed the next.",
       },
       { type: "education" },
     ],
@@ -80,14 +84,22 @@ export const consoleTurns: ConsoleTurn[] = [
     prompt: "Tell me about Davis",
     steps: [
       { type: "thought", text: "Loading case study", detail: "davis" },
-      { type: "tool", call: "get_project('davis')", result: "ok · 13 technologies" },
       {
-        type: "say",
-        text: "Davis is an AI sales development representative — a pipeline of cooperating agents that finds prospects matching an ideal customer profile, researches each one across LinkedIn, Reddit and the open web, drafts a personalised email from what it actually found, tracks the reply and its sentiment, then joins the resulting meeting to transcribe it and pull out action items.",
+        type: "tool",
+        call: "get_project('davis')",
+        result: "ok · 5 decisions · 13 technologies",
       },
       {
         type: "say",
-        text: "Next.js and FastAPI, orchestrated with LangGraph, inference on Groq, vector memory in Pinecone, and the browser-automation research agent isolated as its own containerised service so a hung scrape can never take down the API.",
+        text: "Davis is an evidence-grounded AI sales development agent. It finds prospects, researches them, and drafts personalised outreach — and every prospect score cites a source URL, a snippet and an observed-at timestamp, so a salesperson can check what the agent actually saw instead of trusting a bare number.",
+      },
+      {
+        type: "say",
+        text: "The engineering she would want you to ask about: scoring is split into an LLM signal-extraction stage and a deterministic Python scorer, so identical inputs always give identical, unit-testable scores. Sending is approval-first — pending, approved, sent — behind a six-rule policy guard, with a unique idempotency key that makes duplicate sends impossible. Tenant isolation is row-level security over 45 Postgres tables plus per-workspace Pinecone namespaces, not a WHERE clause someone has to remember.",
+      },
+      {
+        type: "say",
+        text: "Next.js on Vercel, FastAPI on Railway, LangGraph for the multi-stage workflow, Groq for inference, Supabase for auth and Postgres, and Braintrust tracing over the whole pipeline.",
       },
       { type: "projects", slugs: ["davis"] },
     ],
@@ -121,20 +133,37 @@ export const consoleTurns: ConsoleTurn[] = [
       { type: "tool", call: "get_skills()", result: "5 groups" },
       {
         type: "say",
-        text: "Applied, and shipped rather than studied. RAG end to end — chunking, local sentence-transformer embeddings, FAISS and Pinecone vector stores, retrieval strategy. Structured outputs with enforced JSON schemas. Prompt engineering for a specific domain. Multi-agent orchestration with LangGraph. And LLM-as-judge evaluation with rubric scoring, which is the part most portfolios skip entirely.",
+        text: "Applied, and shipped rather than studied. RAG end to end — chunking, local sentence-transformer embeddings, FAISS and Pinecone vector stores, retrieval strategy. Structured outputs with enforced JSON schemas. Tool calling and agent orchestration with LangGraph. Tracing and evaluation with Braintrust. And LLM-as-judge rubric scoring, which is the part most portfolios skip entirely.",
       },
       { type: "skills" },
     ],
   },
   {
-    id: "teaching",
-    prompt: "She taught for six years — what has that got to do with engineering?",
+    id: "internship",
+    prompt: "Has she worked on a real team?",
     steps: [
-      { type: "thought", text: "Retrieving experience record" },
-      { type: "tool", call: "get_experience()", result: "1 record · 6+ years" },
+      { type: "thought", text: "Retrieving experience records" },
+      { type: "tool", call: "get_experience()", result: "2 records" },
       {
         type: "say",
-        text: "Everything, in her case. Six years teaching maths and coding to students in the US, UK and Canada means six years watching precisely how people fail at things — which wrong answers signal a real misconception and which are a slip, and what feedback actually changes the next attempt.",
+        text: "Yes — she interned as a software engineer at Manrke, building a multi-tenant backend that isolates each client's data in its own workspace with row-level security and per-tenant scoping, serving every tenant from a single deployment. She also built the memory layer: conversation context persisted across sessions in a vector store, so the agent recalls prior turns instead of restarting cold.",
+      },
+      {
+        type: "say",
+        text: "That is where the multi-tenancy work in Davis comes from. Before that, years of freelance teaching — remote, international, working directly with clients across three countries.",
+      },
+      { type: "experience" },
+    ],
+  },
+  {
+    id: "teaching",
+    prompt: "She taught for years — what has that got to do with engineering?",
+    steps: [
+      { type: "thought", text: "Retrieving experience record" },
+      { type: "tool", call: "get_experience(kind='freelance')", result: "1 record · 6+ years" },
+      {
+        type: "say",
+        text: "Everything, in her case. Years spent teaching maths and coding to students in the US, UK and Canada means years watching precisely how people fail at things — which wrong answers signal a real misconception and which are a slip, and what feedback actually changes the next attempt.",
       },
       {
         type: "say",
@@ -152,7 +181,7 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "say",
         // TODO(ila): replace with 2–3 sentences in Ila's own voice.
-        text: "It reads as a switch, but it is closer to a straight line: physics for the quantitative foundation, six years teaching to fund and sharpen the domain knowledge, an MCA specialising in Educational Technology & Data Analytics for the engineering, and now AI systems that sit exactly where all three meet.",
+        text: "It reads as a switch, but it is closer to a straight line: physics for the quantitative foundation, years of teaching to fund and sharpen the domain knowledge, an MCA specialising in Educational Technology & Data Analytics for the engineering, and now AI systems that sit exactly where all three meet.",
       },
       { type: "education" },
     ],

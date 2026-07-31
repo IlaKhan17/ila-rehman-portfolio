@@ -3,78 +3,94 @@ import type { Project } from "./types";
 /**
  * Every claim here is traceable to the repositories or the résumé.
  * Nothing is inflated — recruiters open the code.
- *
- * TODO(ila): confirm the two live URLs below before launch.
  */
 
 export const projects: Project[] = [
   {
     slug: "davis",
     name: "Davis",
-    blurb: "Multi-agent AI sales development representative",
+    blurb: "Evidence-grounded AI sales development agent",
     featured: true,
     year: "2026",
     problem:
-      "Outbound sales is hours of manual research per prospect — finding the right people, reading their posts, working out what they actually care about, then writing an email that does not sound automated. Most tooling automates the sending and skips the thinking.",
+      "Outbound sales is hours of manual research per prospect — finding the right people, reading what they have posted, working out what they actually care about, then writing an email that does not sound automated. Most tooling automates the sending and skips the thinking. The tools that do score prospects hand you a number with nothing behind it, so nobody trusts it, and an agent that can send email on your behalf is one bad generation away from embarrassing you in front of a customer.",
     built:
-      "An end-to-end pipeline of cooperating agents. It discovers prospects matching an ideal customer profile, researches each one across LinkedIn, Reddit and the open web, drafts a genuinely personalised email from what it found, tracks replies and their sentiment, then joins the meeting it booked — transcribing it and extracting action items into a searchable knowledge base.",
+      "A multi-tenant AI sales development agent that finds prospects, researches them, and drafts personalised outreach — where every prospect score cites a source URL, a snippet and an observed-at timestamp, so a human can check the evidence behind any number. Sending is approval-first: nothing leaves the system until a person approves it, and a policy guard makes duplicate sends impossible.",
     architecture: [
-      "Next.js 16 · dashboard, prospects, email editor, meeting viewer",
+      "Next.js · dashboard, prospects, email editor, approvals queue",
       "        ↓",
-      "FastAPI · orchestration, auth, knowledge base",
-      "  ├── LangGraph  multi-stage outreach workflow",
-      "  ├── Groq       LLM inference",
-      "  ├── Pinecone   vector memory + semantic recall",
-      "  └── research microservice (Docker) · Playwright scraping, Redis cache",
+      "FastAPI · orchestration, auth, scoring, send pipeline",
+      "  ├── LangGraph   multi-stage research → signal extraction → draft",
+      "  ├── Groq        LLM inference",
+      "  ├── Pinecone    per-workspace namespaces, vector memory",
+      "  ├── Python      deterministic ICP scorer (weighted, unit-tested)",
+      "  └── Braintrust  tracing over the whole pipeline",
       "        ↓",
-      "Supabase (PostgreSQL) · Redis · Railway + Vercel",
+      "Supabase · Postgres + auth · 45 tables under RLS policies",
+      "Redis · cache & queues",
+      "        ↓",
+      "Vercel (frontend) · Railway (backend)",
     ],
     highlights: [
-      "Prospect discovery that matches an ICP across multiple platforms, not a single scraped list.",
-      "Research agent isolated as its own containerised service with its own cache and driver layer, so scraping failures cannot take down the API.",
-      "Multi-stage LangGraph workflow turns raw research into personalised outreach rather than one prompt doing everything.",
-      "Reply tracking with sentiment analysis, feeding automatic follow-up generation.",
-      "Meeting intelligence: bots join calls, transcribe, extract action items, and index them into a vector-backed knowledge base.",
+      "Every prospect score cites its evidence — source URL, snippet and observed-at timestamp — so a number can always be audited back to what the agent actually saw.",
+      "Scoring splits into an LLM signal-extraction stage and a deterministic Python scorer with weighted ICP criteria, so identical inputs always produce identical, unit-testable scores.",
+      "Approval-first send pipeline (pending → approved → sent) with a six-rule policy guard, and a unique idempotency key that makes duplicate sends impossible.",
+      "Multi-tenant isolation across organisations and workspaces, enforced by row-level-security policies over 45 Postgres tables with Supabase auth.",
+      "Per-workspace Pinecone namespaces, so one tenant's vector memory can never surface in another tenant's retrieval.",
+      "Braintrust tracing across the pipeline — every stage of a run is inspectable after the fact, not guessed at from logs.",
     ],
     decisions: [
       {
-        choice: "Split the scraper into a separate containerised microservice",
-        insteadOf: "Running Playwright inside the main FastAPI process",
+        choice:
+          "Split scoring into LLM signal extraction plus a deterministic Python scorer",
+        insteadOf: "Asking the model for the score directly",
         because:
-          "Browser automation is memory-heavy and fails often. Isolating it means a hung browser or a blocked scrape degrades one capability instead of crashing the API serving every other request — and it can be scaled or restarted on its own.",
+          "A number straight out of an LLM is not reproducible, not unit-testable, and cannot be explained to the salesperson relying on it. Letting the model do only what it is good at — pulling signals out of messy text — and handing the arithmetic to weighted Python criteria means identical inputs always give identical scores, the weights are visible and tunable, and the scorer has real tests.",
       },
       {
-        choice: "LangGraph for the outreach workflow",
-        insteadOf: "A single large prompt, or ad-hoc chained calls",
+        choice: "Approval-first sending with a unique idempotency key",
+        insteadOf: "Letting the agent send autonomously",
         because:
-          "Personalised outreach is genuinely multi-stage — research, then signal extraction, then drafting. An explicit graph makes each stage inspectable and independently fixable, which matters when output quality is the product.",
+          "An agent with unsupervised send access is one bad generation away from damaging a real customer relationship, and a retry after a timeout is one duplicate away from doing it twice. An explicit pending → approved → sent state machine keeps a human in the loop, and a unique key on the send makes duplicates impossible at the database level rather than 'unlikely' at the application level.",
+      },
+      {
+        choice: "Row-level security in Postgres for tenant isolation",
+        insteadOf: "Filtering by tenant ID in application code",
+        because:
+          "With 45 tables, application-level filtering means every future query is a chance to leak another organisation's pipeline — the worst possible bug in a sales tool. Pushing isolation into RLS policies makes the database refuse cross-tenant reads regardless of what the application asks for, so correctness does not depend on remembering a WHERE clause.",
+      },
+      {
+        choice: "Evidence attached to every score, not just a number",
+        insteadOf: "Surfacing a bare confidence score",
+        because:
+          "Salespeople ignore scores they cannot interrogate. Storing the URL, the snippet and the observed-at timestamp behind each signal makes the score checkable, makes stale research visible, and turns a debugging session from 'why did it say 82?' into reading the three sources it actually used.",
       },
       {
         choice: "Groq for inference",
         insteadOf: "A frontier model on every call",
         because:
-          "The pipeline makes many calls per prospect. Latency and cost per prospect are the binding constraints on whether the system is usable at all, and most stages do not need frontier-level reasoning.",
+          "The pipeline makes many calls per prospect. Latency and cost per prospect are the binding constraints on whether the system is usable at all, and most stages — signal extraction from a page of text — do not need frontier-level reasoning.",
       },
     ],
     tech: [
-      "Next.js 16",
+      "Next.js",
+      "React",
       "TypeScript",
       "FastAPI",
-      "LangChain",
       "LangGraph",
       "Groq",
-      "Pinecone",
       "Supabase",
+      "Postgres / RLS",
+      "Pinecone",
       "Redis",
-      "Docker",
-      "Playwright",
-      "Tailwind",
-      "shadcn/ui",
+      "Braintrust",
+      "Vercel",
+      "Railway",
     ],
     links: [
       {
         label: "Live demo",
-        href: "https://ai-sales-development-representative-theta.vercel.app",
+        href: "https://davis.ilarehman.com",
         kind: "demo",
       },
       {
@@ -103,7 +119,8 @@ export const projects: Project[] = [
       "                → partial credit + knowledge-gap tags",
       "GET  /report    aggregate → grade + ranked gaps",
       "",
-      "FastAPI · Pydantic v2 · Docker · React/Vite frontend",
+      "FastAPI · Pydantic v2 · LangChain",
+      "Docker container → Railway · React/Vite frontend",
     ],
     highlights: [
       "Every question is grounded in retrieved source chunks, so the model cannot invent material the document never contained.",
@@ -112,6 +129,7 @@ export const projects: Project[] = [
       "Rubric grading across accuracy, completeness and terminology, with partial credit and per-criterion feedback.",
       "Knowledge-gap tags aggregate across a session into ranked weak areas and a study recommendation.",
       "Six documented REST endpoints with auto-generated OpenAPI docs and Pydantic v2 validation.",
+      "Containerised with Docker and deployed on Railway, built up over 26 incremental commits including real production debugging.",
     ],
     decisions: [
       {
@@ -147,14 +165,13 @@ export const projects: Project[] = [
       "GPT-4o",
       "sentence-transformers",
       "Pydantic v2",
-      "SQLAlchemy",
       "Docker",
+      "Railway",
       "React",
       "Vite",
       "TypeScript",
     ],
     links: [
-      // TODO(ila): confirm the canonical HTTPS URL, and make it agree with the résumé.
       { label: "Live demo", href: "https://adaptquiz.ilarehman.com", kind: "demo" },
       {
         label: "Source",

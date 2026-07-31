@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ilarehman.com
 
-## Getting Started
+Portfolio for **Ila Rehman — AI Engineer**. Next.js 16 (App Router), TypeScript,
+Tailwind v4. Dark-first, no photograph, fully static.
 
-First, run the development server:
+The homepage hero is **ILA**, an agent console: a recruiter picks a curated
+prompt chip and watches a scripted agent run — thinking states, tool-call
+traces, streamed output, rich answer blocks. Every answer is static content
+written by Ila. There is no model call at runtime, so no API key, no cost, and
+no chance of the assistant inventing something in front of a recruiter. The
+console is an enhancement only: everything it can say is also in the sections
+below it, server-rendered and indexable.
+
+> This repo is the portfolio site only. Davis and AdaptQuiz live in their own
+> repositories — this site links to them, it does not contain them.
+
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # production build; also typechecks
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Never edit JSX to change what the site says.** All content is typed data in
+`content/`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| File | What it drives |
+|---|---|
+| `profile.ts` | Name, role, pitch, links, About paragraphs, nav sections, `siteUrl` |
+| `experience.ts` | Experience entries, in display order |
+| `projects.ts` | Project cards *and* their case-study pages at `/projects/<slug>` |
+| `skills.ts` | Skill groups, education, languages |
+| `agent-qa.ts` | Every question ILA will answer, and its scripted steps |
 
-## Learn More
+Two conventions worth knowing:
 
-To learn more about Next.js, take a look at the following resources:
+- **Anything whose value starts with `TODO` is hidden from visitors.**
+  Placeholder bullets never reach production; a draft entry degrades to the
+  fields that are real. `experienceIsDraft` shows a warning banner in dev only.
+- **ILA's information boundary is simply which questions exist in
+  `agent-qa.ts`.** Adding a turn is the only way to widen what she will discuss.
+  Anything outside the set gets `consoleFallback`, which offers email rather
+  than a guess.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Adding a project to `projects.ts` automatically creates its case-study page, its
+sitemap entry and its JSON-LD record.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
+Vercel Hobby, one project, auto-deploy on push to `main`. DNS stays at
+Namecheap, so the existing `adaptquiz` and `davis` subdomain records are
+untouched.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Host | Points at |
+|---|---|
+| `ilarehman.com` | this repo's Vercel project |
+| `www.ilarehman.com` | redirect to apex |
+| `adaptquiz.ilarehman.com` | AdaptQuiz API — its own deployment |
+| `davis.ilarehman.com` | Davis — its own Vercel project |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`davis.ilarehman.com` must be added as a domain **inside Davis's own Vercel
+project**, not this one. Two projects, two domains, no shared config.
+
+- `/resume.pdf` is served from `public/resume.pdf`. Replace that file to update
+  the résumé; the filename is linked from `profile.ts` and should not change.
+- The share card is generated at build time by `app/opengraph-image.tsx` from
+  `profile.ts`, and is reused for both OpenGraph and Twitter.
