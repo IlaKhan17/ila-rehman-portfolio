@@ -20,11 +20,10 @@ export const experience: Experience[] = [
     summary:
       "Building distributed, event-driven microservices on AWS behind an end-to-end document-automation platform, with LLMs integrated into the production pipelines rather than bolted on beside them.",
     points: [
-      "Design and build distributed, event-driven microservices on AWS (Lambda, ECS, Step Functions, SQS/SNS, S3, DynamoDB and RDS) powering an end-to-end document-automation platform.",
-      "Own systems across the full lifecycle: architecture, implementation, containerised deployment to ECR and Lambda across multiple AWS accounts, monitoring, and live production debugging.",
+      "Design and build distributed, event-driven microservices on AWS (Lambda, ECS, Step Functions, SQS/SNS, S3, DynamoDB and RDS) for an end-to-end document-automation platform, deployed to ECR and Lambda across multiple AWS accounts.",
       "Integrate LLMs into production pipelines for extraction, classification and natural-language generation, with guardrails, deterministic fallbacks, and cost and latency controls.",
       "Engineer for reliability at scale: idempotent processing, exactly-once semantics, distributed state coordination, and graceful failure handling across asynchronous services.",
-      "Drive observability and operations through structured logging, correlation-ID tracing in CloudWatch, and alerting that surfaces and diagnoses issues quickly.",
+      "Drive observability: structured logging, correlation-ID tracing through CloudWatch, and alerting that surfaces and diagnoses issues quickly.",
       // TODO(ila): one number would make this section undeniable. Documents processed
       // per day, latency, error rate before and after, or accounts and services owned.
       "TODO: one accomplishment with a metric, such as throughput handled, latency, error rate improved, or scale owned.",

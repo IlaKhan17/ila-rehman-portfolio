@@ -19,23 +19,25 @@ export const projects: Project[] = [
     architecture: [
       "Next.js · dashboard, prospects, email editor, approvals queue",
       "        ↓",
-      "FastAPI · orchestration, auth, scoring, send pipeline",
+      "FastAPI · 68 endpoints across 17 routers",
       "  ├── LangGraph   multi-stage research → signal extraction → draft",
       "  ├── Groq        LLM inference",
       "  ├── Pinecone    per-workspace namespaces, vector memory",
-      "  ├── Python      deterministic ICP scorer (weighted, unit-tested)",
+      "  ├── Python      deterministic scorer, 6 dimensions summing to 100",
       "  └── Braintrust  tracing over the whole pipeline",
       "        ↓",
-      "Supabase · Postgres + auth · 45 tables under RLS policies",
+      "Supabase · Postgres + auth · 40 RLS policies over 45 tables",
       "Redis · cache & queues",
       "        ↓",
       "Vercel (frontend) · Railway (backend)",
     ],
     highlights: [
       "Every prospect score cites its evidence (source URL, snippet and observed-at timestamp), so a number can always be audited back to what the agent actually saw.",
-      "Scoring splits into an LLM signal-extraction stage and a deterministic Python scorer with weighted ICP criteria, so identical inputs always produce identical, unit-testable scores.",
+      "Scoring splits into an LLM signal-extraction stage and a deterministic Python scorer across 6 weighted dimensions summing to 100, so identical inputs produce byte-identical, unit-testable scores.",
       "Approval-first send pipeline (pending → approved → sent) with a six-rule policy guard, and a unique idempotency key that makes duplicate sends impossible.",
-      "Multi-tenant isolation across organisations and workspaces, enforced by row-level-security policies over 45 Postgres tables with Supabase auth.",
+      "Multi-tenant isolation enforced by 40 row-level-security policies across 45 Postgres tables, with 0 tables left unprotected.",
+      "A 12-intent reply classifier whose 1.0 unsubscribe recall is enforced as a CI gate, so a release cannot ship if it would miss an opt-out.",
+      "A 103-case evaluation suite over the pipeline, so changes to prompts or scoring are measured rather than eyeballed.",
       "Per-workspace Pinecone namespaces, so one tenant's vector memory can never surface in another tenant's retrieval.",
       "Braintrust tracing across the pipeline, so every stage of a run is inspectable after the fact, not guessed at from logs.",
     ],
@@ -45,7 +47,7 @@ export const projects: Project[] = [
           "Split scoring into LLM signal extraction plus a deterministic Python scorer",
         insteadOf: "Asking the model for the score directly",
         because:
-          "A number straight out of an LLM is not reproducible, not unit-testable, and cannot be explained to the salesperson relying on it. Letting the model do only what it is good at, pulling signals out of messy text, and handing the arithmetic to weighted Python criteria, means identical inputs always give identical scores, the weights are visible and tunable, and the scorer has real tests.",
+          "A number straight out of an LLM is not reproducible, not unit-testable, and cannot be explained to the salesperson relying on it. Letting the model do only what it is good at, pulling signals out of messy text, and handing the arithmetic to 6 weighted Python dimensions summing to 100, means identical inputs always give byte-identical scores, the weights are visible and tunable, and the scorer has real tests.",
       },
       {
         choice: "Approval-first sending with a unique idempotency key",
@@ -64,6 +66,12 @@ export const projects: Project[] = [
         insteadOf: "Surfacing a bare confidence score",
         because:
           "Salespeople ignore scores they cannot interrogate. Storing the URL, the snippet and the observed-at timestamp behind each signal makes the score checkable, makes stale research visible, and turns a debugging session from 'why did it say 82?' into reading the three sources it actually used.",
+      },
+      {
+        choice: "Unsubscribe recall gated in CI at 1.0",
+        insteadOf: "Tracking classifier accuracy on a dashboard",
+        because:
+          "Missing an opt-out is not a quality regression, it is a compliance failure and a person who asked to be left alone being contacted again. Of the 12 intents the reply classifier handles, that is the one where a single miss is unacceptable, so the release fails rather than the metric dipping quietly on a chart nobody opens.",
       },
       {
         choice: "Groq for inference",
@@ -101,6 +109,77 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "apriciate",
+    name: "Apriciate",
+    blurb: "Multi-tenant WhatsApp AI travel agent",
+    featured: true,
+    year: "2026",
+    problem:
+      "Booking travel by chat is the interface people already want, and it is where agents fail worst. The model has to hold a conversation across days, resolve vague dates like 'next Friday' against a real calendar, and call live flight inventory correctly, on a channel where there is no UI to fall back on. A tool call that silently fails looks to the traveller like being ignored.",
+    built:
+      "A multi-tenant travel agent that runs entirely over WhatsApp. Twilio delivers the message, FastAPI orchestrates a LangChain tool loop, and Duffel supplies live flight inventory. Conversation state lives in a deterministic memory layer rather than in the model's context, and tenants are isolated by PostgreSQL row-level security.",
+    architecture: [
+      "WhatsApp → Twilio webhook",
+      "        ↓",
+      "FastAPI · session routing, deterministic memory layer",
+      "  ├── LangChain tool loop",
+      "  │     ├── Groq       primary inference",
+      "  │     └── Claude     fallback on tool-call failure",
+      "  ├── Duffel     live flight search and offers",
+      "  └── Braintrust tracing over every turn",
+      "        ↓",
+      "PostgreSQL · row-level security per tenant",
+      "Docker",
+    ],
+    highlights: [
+      "Braintrust traces exposed a 56% LLM tool-call failure rate that logs alone had not surfaced. Fixing it took a provider fallback from Groq to Claude plus explicit date-grounding, not prompt tinkering.",
+      "Deterministic conversation-memory layer, so what the agent remembers about a booking does not depend on a model summarising its own context correctly.",
+      "PostgreSQL row-level security for tenant isolation, enforced by the database rather than by application filtering.",
+      "Hardened to 274 tests with mypy --strict across more than 120 files, because a travel agent that spends real money should fail loudly in CI rather than quietly in a chat thread.",
+    ],
+    decisions: [
+      {
+        choice: "Provider fallback from Groq to Claude on tool-call failure",
+        insteadOf: "Retrying the same model, or rewriting the prompt again",
+        because:
+          "Braintrust traces put the tool-call failure rate at 56%, and the failures clustered where the fast model mangled structured arguments. Retrying the same model reproduces the same mistake at twice the latency. Routing those calls to a stronger model only when the first attempt fails fixed the failure class outright while keeping the cheap path for the majority of turns.",
+      },
+      {
+        choice: "Ground every relative date before it reaches the model",
+        insteadOf: "Trusting the model to resolve 'next Friday' itself",
+        because:
+          "Flight search takes absolute dates, and a model with no reliable notion of today will confidently produce one that is a week out. Resolving relative dates in code first turned a whole category of wrong-but-plausible bookings into an impossible one.",
+      },
+      {
+        choice: "Deterministic conversation memory in Postgres",
+        insteadOf: "Letting the model carry booking state in its context window",
+        because:
+          "A WhatsApp thread can go quiet for days and resume mid-booking. Model-summarised state drifts, drops the passenger count, and cannot be inspected when a traveller disputes what they asked for. Structured state in the database is queryable, testable, and survives any change of model.",
+      },
+      {
+        choice: "mypy --strict across the codebase, with 274 tests",
+        insteadOf: "Types where convenient, tests on the happy path",
+        because:
+          "The agent touches money, live inventory and per-tenant data. Most of the bugs that matter here are shape mismatches at boundaries between the tool loop, the provider clients and the database, which is exactly the class strict typing catches before a traveller does.",
+      },
+    ],
+    tech: [
+      "Python",
+      "FastAPI",
+      "PostgreSQL / RLS",
+      "LangChain",
+      "Groq",
+      "Anthropic Claude",
+      "Twilio",
+      "Duffel",
+      "Braintrust",
+      "Docker",
+      "pytest",
+      "mypy",
+    ],
+    links: [],
+  },
+  {
     slug: "adaptquiz",
     name: "AdaptQuiz API",
     blurb: "RAG quiz generation with LLM-as-judge grading",
@@ -125,7 +204,7 @@ export const projects: Project[] = [
     highlights: [
       "Every question is grounded in retrieved source chunks, so the model cannot invent material the document never contained.",
       "Retrieval is scoped by document ID rather than top-k similarity, giving full coverage of the source regardless of how large the index grows.",
-      "Local sentence-transformer embeddings: zero embedding-API cost, and the pipeline runs offline.",
+      "Embeddings run 100% locally on all-MiniLM-L6-v2 (384-dim), so embedding cost is $0 and ingestion works offline.",
       "Rubric grading across accuracy, completeness and terminology, with partial credit and per-criterion feedback.",
       "Knowledge-gap tags aggregate across a session into ranked weak areas and a study recommendation.",
       "Six documented REST endpoints with auto-generated OpenAPI docs and Pydantic v2 validation.",

@@ -28,21 +28,21 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "tool",
         call: "search_projects(featured=true)",
-        result: "2 results · Davis, AdaptQuiz API",
+        result: "3 results · Davis, Apriciate, AdaptQuiz API",
       },
       {
         type: "say",
-        text: "Because she has already shipped the thing most junior candidates only describe. AdaptQuiz is a production RAG API with retrieval grounding, structured outputs and an LLM-as-judge evaluation layer. Davis is a multi-tenant AI sales agent where every score cites its evidence, sending is approval-gated, and tenant isolation is enforced by row-level security across 45 Postgres tables. Both are deployed, both are open source, and the code is legible.",
+        text: "Because she has already shipped the thing most junior candidates only describe. AdaptQuiz is a production RAG API with retrieval grounding, structured outputs and an LLM-as-judge evaluation layer. Davis is a multi-tenant AI sales agent across 68 endpoints where every score cites its evidence, sending is approval-gated, and 40 row-level-security policies cover all 45 Postgres tables. Both are deployed, both are open source, and the code is legible.",
       },
       {
         type: "say",
-        text: "The detail worth noticing: she builds the boring parts. Deterministic scoring instead of asking a model for a number. An idempotency key so a retry cannot send twice. Rubric grading with per-criterion feedback instead of string matching. That is the difference between a demo and something you can put in front of users.",
+        text: "The detail worth noticing: she builds the boring parts. Deterministic scoring instead of asking a model for a number. An idempotency key so a retry cannot send twice. Rubric grading with per-criterion feedback instead of string matching. A 103-case eval suite and an unsubscribe-recall gate that fails the build rather than dipping on a dashboard. That is the difference between a demo and something you can put in front of users.",
       },
       {
         type: "say",
         text: "And it is not only side projects. She currently builds distributed, event-driven microservices on AWS with LLMs integrated into the production pipelines. That means guardrails, deterministic fallbacks and exactly-once semantics: the reliability work side projects never force you to learn. First Class Physics honours underneath that, and years teaching maths and code across the US, UK and Canada: the evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
       },
-      { type: "projects", slugs: ["davis", "adaptquiz"] },
+      { type: "projects", slugs: ["davis", "apriciate", "adaptquiz"] },
     ],
   },
   {
@@ -70,13 +70,13 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "tool",
         call: "search_projects()",
-        result: "3 results",
+        result: "4 results",
       },
       {
         type: "say",
-        text: "Three shipped projects, in order of depth:",
+        text: "Four shipped projects, in order of depth:",
       },
-      { type: "projects", slugs: ["davis", "adaptquiz", "focus-flow"] },
+      { type: "projects", slugs: ["davis", "apriciate", "adaptquiz", "focus-flow"] },
     ],
   },
   {
@@ -87,7 +87,7 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "tool",
         call: "get_project('davis')",
-        result: "ok · 5 decisions · 13 technologies",
+        result: "ok · 68 endpoints · 17 routers",
       },
       {
         type: "say",
@@ -95,13 +95,34 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "The engineering she would want you to ask about: scoring is split into an LLM signal-extraction stage and a deterministic Python scorer, so identical inputs always give identical, unit-testable scores. Sending is approval-first (pending, approved, sent) behind a six-rule policy guard, with a unique idempotency key that makes duplicate sends impossible. Tenant isolation is row-level security over 45 Postgres tables plus per-workspace Pinecone namespaces, not a WHERE clause someone has to remember.",
+        text: "The engineering she would want you to ask about: scoring is split into an LLM signal-extraction stage and a deterministic Python scorer across 6 weighted dimensions summing to 100, so identical inputs give byte-identical, unit-testable scores. Sending is approval-first (pending, approved, sent) behind a six-rule policy guard, with a unique idempotency key that makes duplicate sends impossible. Tenant isolation is 40 row-level-security policies across 45 Postgres tables with none left unprotected, plus per-workspace Pinecone namespaces, not a WHERE clause someone has to remember.",
       },
       {
         type: "say",
         text: "Next.js on Vercel, FastAPI on Railway, LangGraph for the multi-stage workflow, Groq for inference, Supabase for auth and Postgres, and Braintrust tracing over the whole pipeline.",
       },
       { type: "projects", slugs: ["davis"] },
+    ],
+  },
+  {
+    id: "apriciate",
+    prompt: "Tell me about Apriciate",
+    steps: [
+      { type: "thought", text: "Loading case study", detail: "apriciate" },
+      {
+        type: "tool",
+        call: "get_project('apriciate')",
+        result: "ok · 274 tests · mypy --strict",
+      },
+      {
+        type: "say",
+        text: "Apriciate is a multi-tenant travel agent that runs entirely over WhatsApp. Twilio delivers the message, FastAPI drives a LangChain tool loop, Duffel supplies live flight inventory, and tenants are isolated by PostgreSQL row-level security. Conversation state sits in a deterministic memory layer rather than in the model's context, so a thread can go quiet for days and resume mid-booking without the agent forgetting how many people are flying.",
+      },
+      {
+        type: "say",
+        text: "The story she would tell in an interview is the debugging. Braintrust traces showed a 56% tool-call failure rate that the logs had not surfaced at all. The fix was not prompt tinkering: it was grounding relative dates in code before they reached the model, and falling back from Groq to Claude on the calls where the fast model mangled structured arguments. Then 274 tests and mypy --strict across 120+ files, because this agent spends real money.",
+      },
+      { type: "projects", slugs: ["apriciate"] },
     ],
   },
   {
@@ -191,12 +212,17 @@ export const consoleTurns: ConsoleTurn[] = [
     prompt: "What is she working on now?",
     steps: [
       { type: "thought", text: "Checking recent activity" },
-      { type: "tool", call: "get_current_focus()", result: "ok" },
+      { type: "tool", call: "get_current_focus()", result: "ok · current role" },
       {
         type: "say",
         // TODO(ila): keep this current. A stale answer here is worse than none.
-        text: "Deepening the agent side of the work: evaluation harnesses for multi-step agents, retrieval quality measurement, and getting Davis's outreach pipeline reliable enough to judge honestly rather than demo well.",
+        text: "Her day job, which is the document-automation platform at Manrke: distributed, event-driven microservices on AWS, and the work of making LLM steps inside those pipelines behave predictably. Guardrails, deterministic fallbacks, cost and latency controls, and the reliability side that decides whether any of it can be trusted at scale, meaning idempotent processing, exactly-once semantics and correlation-ID tracing that lets you follow one document through a dozen asynchronous services.",
       },
+      {
+        type: "say",
+        text: "Outside that, the thread running through her own projects is evaluation: eval suites, traces and CI gates that measure whether an agent changed for the better instead of assuming it did.",
+      },
+      { type: "experience" },
     ],
   },
   {
