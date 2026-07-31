@@ -15,22 +15,26 @@ export const experience: Experience[] = [
     role: "Software Engineer Intern",
     org: "Manrke",
     kind: "Internship · Remote",
-    // TODO(ila): replace with exact months, e.g. "Feb 2026 — Jun 2026".
-    period: "2026",
+    period: "April 2026 — Present",
     location: "Remote",
     summary:
-      "Built multi-tenant backend systems — per-tenant data isolation and a persistent conversation-memory layer — serving every client from a single deployment.",
+      "Building distributed, event-driven microservices on AWS behind an end-to-end document-automation platform — with LLMs integrated into the production pipelines, not bolted on beside them.",
     points: [
-      "Built a scalable multi-tenant backend that isolates each client's data in its own workspace using row-level security and per-tenant scoping, serving every tenant from a single deployment.",
-      "Designed a production-ready memory system that persists conversation context across sessions using embeddings in a vector store, so the agent recalls prior turns instead of restarting cold.",
-      // TODO(ila): one accomplishment with a number — tenants served, latency, tests written, or reliability improved.
-      "TODO — a real accomplishment with a metric: time saved, scale handled, tests written, or reliability improved.",
+      "Design and build distributed, event-driven microservices on AWS — Lambda, ECS, Step Functions, SQS/SNS, S3, DynamoDB and RDS — powering an end-to-end document-automation platform.",
+      "Own systems across the full lifecycle: architecture, implementation, containerised deployment to ECR and Lambda across multiple AWS accounts, monitoring, and live production debugging.",
+      "Integrate LLMs into production pipelines for extraction, classification and natural-language generation, with guardrails, deterministic fallbacks, and cost and latency controls.",
+      "Engineer for reliability at scale: idempotent processing, exactly-once semantics, distributed state coordination, and graceful failure handling across asynchronous services.",
+      "Drive observability and operations — structured logging, correlation-ID tracing through CloudWatch, and alerting that surfaces and diagnoses issues quickly.",
+      // TODO(ila): one number would make this section undeniable — documents processed
+      // per day, latency, error rate before/after, or accounts and services owned.
+      "TODO — one accomplishment with a metric: throughput handled, latency, error rate improved, or scale owned.",
     ],
     tags: [
-      "Multi-Tenant Architecture",
-      "Row-Level Security",
-      "Vector Memory",
-      "Backend",
+      "AWS",
+      "Event-Driven Microservices",
+      "LLMs in Production",
+      "Distributed Systems",
+      "Observability",
     ],
   },
   {
@@ -40,7 +44,7 @@ export const experience: Experience[] = [
     period: "6+ years",
     location: "Students in the US, UK and Canada",
     summary:
-      "Years teaching mathematics and coding to international students — the work that funded a deliberate move into engineering, and the domain knowledge behind AdaptQuiz's rubric grader.",
+      "Years teaching mathematics and coding to international students — the work that funded a deliberate move into engineering, and the reason AdaptQuiz grades against a rubric instead of matching strings.",
     points: [
       "Taught mathematics and programming one-to-one to students across three countries and several curricula, adapting explanations to where each student's understanding actually broke.",
       "Marking thousands of free-text answers is where AdaptQuiz's grader comes from: partial credit, per-criterion feedback and knowledge-gap tagging are what good assessment requires, not features found in a tutorial.",

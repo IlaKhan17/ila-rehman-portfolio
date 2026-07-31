@@ -40,7 +40,7 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "And she is not a generalist who read about AI last year. First Class Physics honours, an MCA specialising in Educational Technology & Data Analytics, an internship building multi-tenant backends, and years teaching maths and code to students across the US, UK and Canada. The evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
+        text: "And it is not only side projects. She currently builds distributed, event-driven microservices on AWS with LLMs integrated into the production pipelines — guardrails, deterministic fallbacks, exactly-once semantics, the reliability work that side projects never force you to learn. First Class Physics honours underneath that, and years teaching maths and code across the US, UK and Canada: the evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
       },
       { type: "projects", slugs: ["davis", "adaptquiz"] },
     ],
@@ -53,11 +53,11 @@ export const consoleTurns: ConsoleTurn[] = [
       { type: "tool", call: "get_profile()", result: "ok" },
       {
         type: "say",
-        text: "Ila Rehman — an AI Engineer in Delhi, working remotely. She builds LLM-powered applications and agentic systems: retrieval pipelines, multi-tenant agents, and the evaluation layers that tell you whether any of it actually works.",
+        text: "Ila Rehman — an AI Engineer in Delhi, working remotely. She builds LLM-powered applications and the distributed systems they run on: event-driven microservices on AWS, retrieval pipelines, agentic workflows, and the evaluation layers that tell you whether any of it actually works.",
       },
       {
         type: "say",
-        text: "Physics first, then years of teaching, then an EdTech master's, then an internship on multi-tenant backends, now engineering full time. Each step fed the next.",
+        text: "Physics first, then years of teaching, then an MCA, and now shipping production systems as a software engineer. Each step fed the next.",
       },
       { type: "education" },
     ],
@@ -140,17 +140,17 @@ export const consoleTurns: ConsoleTurn[] = [
   },
   {
     id: "internship",
-    prompt: "Has she worked on a real team?",
+    prompt: "What does she do in production?",
     steps: [
       { type: "thought", text: "Retrieving experience records" },
-      { type: "tool", call: "get_experience()", result: "2 records" },
+      { type: "tool", call: "get_experience()", result: "2 records · current role" },
       {
         type: "say",
-        text: "Yes — she interned as a software engineer at Manrke, building a multi-tenant backend that isolates each client's data in its own workspace with row-level security and per-tenant scoping, serving every tenant from a single deployment. She also built the memory layer: conversation context persisted across sessions in a vector store, so the agent recalls prior turns instead of restarting cold.",
+        text: "She is a software engineer intern at Manrke, and it is real production work: distributed, event-driven microservices on AWS — Lambda, ECS, Step Functions, SQS/SNS, DynamoDB, RDS — behind an end-to-end document-automation platform. She owns systems across the whole lifecycle, from architecture through containerised deploys to ECR and Lambda across multiple AWS accounts, to live production debugging.",
       },
       {
         type: "say",
-        text: "That is where the multi-tenancy work in Davis comes from. Before that, years of freelance teaching — remote, international, working directly with clients across three countries.",
+        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation — with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
       },
       { type: "experience" },
     ],
@@ -181,7 +181,7 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "say",
         // TODO(ila): replace with 2–3 sentences in Ila's own voice.
-        text: "It reads as a switch, but it is closer to a straight line: physics for the quantitative foundation, years of teaching to fund and sharpen the domain knowledge, an MCA specialising in Educational Technology & Data Analytics for the engineering, and now AI systems that sit exactly where all three meet.",
+        text: "It reads as a switch, but it is closer to a straight line: physics for the quantitative foundation, years of teaching to fund a deliberate move and sharpen how she explains hard things, an MCA covering software engineering, data science, cloud computing and machine learning for the engineering itself, and now production systems that use all three.",
       },
       { type: "education" },
     ],
