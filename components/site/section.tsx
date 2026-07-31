@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Shared section shell. The label is rendered as a file path — the one visual
+ * Shared section shell. The label is rendered as a file path, the one visual
  * borrowing from the terminal aesthetic that carries through the whole page.
  */
 export function Section({

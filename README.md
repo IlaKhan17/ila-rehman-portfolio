@@ -1,10 +1,10 @@
 # ilarehman.com
 
-Portfolio for **Ila Rehman — AI Engineer**. Next.js 16 (App Router), TypeScript,
+Portfolio for **Ila Rehman, AI Engineer**. Next.js 16 (App Router), TypeScript,
 Tailwind v4. Dark-first, no photograph, fully static.
 
 The homepage hero is **ILA**, an agent console: a recruiter picks a curated
-prompt chip and watches a scripted agent run — thinking states, tool-call
+prompt chip and watches a scripted agent run: thinking states, tool-call
 traces, streamed output, rich answer blocks. Every answer is static content
 written by Ila. There is no model call at runtime, so no API key, no cost, and
 no chance of the assistant inventing something in front of a recruiter. The
@@ -12,7 +12,7 @@ console is an enhancement only: everything it can say is also in the sections
 below it, server-rendered and indexable.
 
 > This repo is the portfolio site only. Davis and AdaptQuiz live in their own
-> repositories — this site links to them, it does not contain them.
+> repositories. This site links to them, it does not contain them.
 
 ## Develop
 
@@ -59,8 +59,8 @@ untouched.
 |---|---|
 | `ilarehman.com` | this repo's Vercel project |
 | `www.ilarehman.com` | redirect to apex |
-| `adaptquiz.ilarehman.com` | AdaptQuiz API — its own deployment |
-| `davis.ilarehman.com` | Davis — its own Vercel project |
+| `adaptquiz.ilarehman.com` | AdaptQuiz API, its own deployment |
+| `davis.ilarehman.com` | Davis, its own Vercel project |
 
 `davis.ilarehman.com` must be added as a domain **inside Davis's own Vercel
 project**, not this one. Two projects, two domains, no shared config.

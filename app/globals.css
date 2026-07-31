@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Surfaces — dark-first. Cool near-blacks so the violet accent reads clean. */
+  /* Surfaces. Dark-first, cool near-blacks so the violet accent reads clean. */
   --color-base: #08080c;
   --color-surface: #0d0d14;
   --color-raised: #13131d;
@@ -13,7 +13,7 @@
   --color-ink-muted: #a3a2b4;
   --color-ink-faint: #6e6d80;
 
-  /* Accent — deep violet */
+  /* Accent: deep violet */
   --color-accent: #8b5cf6;
   --color-accent-bright: #a78bfa;
   --color-accent-dim: #6d3fd6;
@@ -78,7 +78,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Faint orbital field — a quiet nod to the physics background.
+/* Faint orbital field, a quiet nod to the physics background.
    Purely decorative, fixed, and cheap: two radial gradients, no canvas. */
 body::before {
   content: "";

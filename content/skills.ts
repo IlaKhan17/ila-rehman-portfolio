@@ -87,16 +87,16 @@ export const education: Education[] = [
     field:
       "Software Engineering · Data Science · Cloud Computing · AI & Machine Learning",
     institution: "Indira Gandhi National Open University, New Delhi",
-    period: "2022 — 2025",
-    note: "Where the physics turned into engineering — and where the AI and cloud coursework started pointing at the work I do now.",
+    period: "2022 – 2025",
+    note: "Where the physics turned into engineering, and where the AI and cloud coursework started pointing at the work I do now.",
     pivotal: true,
   },
   {
     degree: "B.Sc. (Hons) Physics with Mathematics",
     field: "First Class Honours",
     institution: "Jamia Millia Islamia, New Delhi",
-    period: "2017 — 2020",
-    note: "Linear algebra and statistics — load-bearing for embeddings and evaluation, not decoration.",
+    period: "2017 – 2020",
+    note: "Linear algebra and statistics, load-bearing for embeddings and evaluation rather than decoration.",
   },
 ];
 

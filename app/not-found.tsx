@@ -17,7 +17,7 @@ export default function NotFound() {
       </h1>
 
       <p className="mt-4 max-w-xl leading-relaxed text-ink-muted">
-        Nothing here. Everything on this site is reachable from the homepage —
+        Nothing here. Everything on this site is reachable from the homepage, so
         try one of these.
       </p>
 

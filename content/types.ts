@@ -2,7 +2,7 @@
  * Shared content types.
  *
  * Everything the site displays lives in `content/*.ts` and is typed here.
- * Edit the data files — never the components.
+ * Edit the data files, never the components.
  */
 
 export type Profile = {
@@ -36,7 +36,7 @@ export type Decision = {
 export type Project = {
   slug: string;
   name: string;
-  /** Six words or fewer — used on cards and in console output. */
+  /** Six words or fewer. Used on cards and in console output. */
   blurb: string;
   /** Featured projects get a full case-study page and a large card. */
   featured: boolean;

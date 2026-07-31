@@ -3,12 +3,12 @@ import { ImageResponse } from "next/og";
 import { profile } from "@/content/profile";
 
 /**
- * The share card. Type and the monogram — no photograph, by design.
+ * The share card. Type and the monogram, no photograph, by design.
  * Statically generated at build time; no fonts fetched, so the build cannot
  * fail on a network hiccup.
  */
 
-export const alt = `${profile.name} — ${profile.role}`;
+export const alt = `${profile.name} · ${profile.role}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

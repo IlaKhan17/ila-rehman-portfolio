@@ -52,7 +52,7 @@ export function AgentConsole() {
     ? runs.map((run) => ({ ...run, revealed: run.turn.steps.length, chars: 0 }))
     : runs;
 
-  /** Reveal everything at once — used for reduced motion and the skip control. */
+  /** Reveal everything at once, for reduced motion and the skip control. */
   const finishRun = useCallback(() => {
     setRuns((current) => {
       const next = [...current];
@@ -188,7 +188,7 @@ function ConsoleChrome() {
         {profile.monogram}
       </span>
       <span className="font-mono text-xs text-ink-muted">
-        ILA <span className="text-ink-faint">— ask me about Ila Rehman</span>
+        ILA <span className="text-ink-faint">· ask me about Ila Rehman</span>
       </span>
       <span className="ml-auto flex items-center gap-1.5">
         <span className="size-1.5 rounded-full bg-signal animate-pulse-dot" />

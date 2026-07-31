@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!project) return {};
 
   return {
-    title: `${project.name} — ${project.blurb}`,
+    title: `${project.name} · ${project.blurb}`,
     description: project.problem,
   };
 }

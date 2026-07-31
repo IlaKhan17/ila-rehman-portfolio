@@ -1,7 +1,7 @@
 import { Section } from "@/components/site/section";
 import { skills } from "@/content/skills";
 
-/** Rendered as a JSON object — legible as data, and honest about its source. */
+/** Rendered as a JSON object: legible as data, and honest about its source. */
 export function Skills() {
   return (
     <Section id="skills" label="skills.json">

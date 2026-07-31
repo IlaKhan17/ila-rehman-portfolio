@@ -24,8 +24,8 @@ const description = `${profile.role} in ${profile.location}. ${profile.pitch}`;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name} — ${profile.role}`,
-    template: `%s — ${profile.name}`,
+    default: `${profile.name} · ${profile.role}`,
+    template: `%s · ${profile.name}`,
   },
   description,
   keywords: [
@@ -42,13 +42,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "profile",
     siteName: profile.name,
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} · ${profile.role}`,
     description,
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} · ${profile.role}`,
     description,
   },
   robots: { index: true, follow: true },

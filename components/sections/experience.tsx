@@ -4,7 +4,7 @@ import { experience, experienceIsDraft } from "@/content/experience";
 /**
  * No placeholder can reach a visitor: every field is passed through `real()`,
  * which drops anything still marked TODO. An unfinished record degrades to
- * role, summary and tags rather than publishing "TODO —" text.
+ * role, summary and tags rather than publishing "TODO" text.
  * The draft notice below is development-only.
  */
 const isPlaceholder = (value: string) => value.trimStart().startsWith("TODO");
@@ -18,8 +18,8 @@ export function ExperienceSection() {
     <Section id="experience" label="experience.log">
       {experienceIsDraft && process.env.NODE_ENV === "development" && (
         <p className="mb-8 rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3 font-mono text-xs text-amber-300">
-          Draft — awaiting real details from Ila. Placeholder bullets are hidden
-          in production. See PLAN.md §8.
+          Draft. Bullets still marked TODO in content/experience.ts are hidden
+          in production.
         </p>
       )}
 

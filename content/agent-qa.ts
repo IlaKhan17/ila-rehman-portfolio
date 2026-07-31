@@ -1,7 +1,7 @@
 import type { ConsoleTurn } from "./types";
 
 /**
- * ILA — the portfolio's agent console.
+ * ILA, the portfolio's agent console.
  *
  * Every answer below is static content written by Ila. There is no model call
  * at runtime: no API key, no cost, no rate limiting, and no possibility of the
@@ -9,7 +9,7 @@ import type { ConsoleTurn } from "./types";
  *
  * The information boundary is simply *which questions exist here*. Anything
  * outside this set gets the fallback below, which offers email rather than a
- * guess. To widen what ILA will discuss, add a turn — that is the only way.
+ * guess. To widen what ILA will discuss, add a turn. That is the only way.
  *
  * The thinking indicators and tool-call lines are presentation, driven by a
  * local state machine. They correspond to real content lookups in `content/`,
@@ -40,7 +40,7 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "And it is not only side projects. She currently builds distributed, event-driven microservices on AWS with LLMs integrated into the production pipelines — guardrails, deterministic fallbacks, exactly-once semantics, the reliability work that side projects never force you to learn. First Class Physics honours underneath that, and years teaching maths and code across the US, UK and Canada: the evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
+        text: "And it is not only side projects. She currently builds distributed, event-driven microservices on AWS with LLMs integrated into the production pipelines. That means guardrails, deterministic fallbacks and exactly-once semantics: the reliability work side projects never force you to learn. First Class Physics honours underneath that, and years teaching maths and code across the US, UK and Canada: the evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
       },
       { type: "projects", slugs: ["davis", "adaptquiz"] },
     ],
@@ -53,7 +53,7 @@ export const consoleTurns: ConsoleTurn[] = [
       { type: "tool", call: "get_profile()", result: "ok" },
       {
         type: "say",
-        text: "Ila Rehman — an AI Engineer in Delhi, working remotely. She builds LLM-powered applications and the distributed systems they run on: event-driven microservices on AWS, retrieval pipelines, agentic workflows, and the evaluation layers that tell you whether any of it actually works.",
+        text: "Ila Rehman, an AI Engineer in Delhi, working remotely. She builds LLM-powered applications and the distributed systems they run on: event-driven microservices on AWS, retrieval pipelines, agentic workflows, and the evaluation layers that tell you whether any of it actually works.",
       },
       {
         type: "say",
@@ -91,11 +91,11 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "Davis is an evidence-grounded AI sales development agent. It finds prospects, researches them, and drafts personalised outreach — and every prospect score cites a source URL, a snippet and an observed-at timestamp, so a salesperson can check what the agent actually saw instead of trusting a bare number.",
+        text: "Davis is an evidence-grounded AI sales development agent. It finds prospects, researches them, and drafts personalised outreach, and every prospect score cites a source URL, a snippet and an observed-at timestamp, so a salesperson can check what the agent actually saw instead of trusting a bare number.",
       },
       {
         type: "say",
-        text: "The engineering she would want you to ask about: scoring is split into an LLM signal-extraction stage and a deterministic Python scorer, so identical inputs always give identical, unit-testable scores. Sending is approval-first — pending, approved, sent — behind a six-rule policy guard, with a unique idempotency key that makes duplicate sends impossible. Tenant isolation is row-level security over 45 Postgres tables plus per-workspace Pinecone namespaces, not a WHERE clause someone has to remember.",
+        text: "The engineering she would want you to ask about: scoring is split into an LLM signal-extraction stage and a deterministic Python scorer, so identical inputs always give identical, unit-testable scores. Sending is approval-first (pending, approved, sent) behind a six-rule policy guard, with a unique idempotency key that makes duplicate sends impossible. Tenant isolation is row-level security over 45 Postgres tables plus per-workspace Pinecone namespaces, not a WHERE clause someone has to remember.",
       },
       {
         type: "say",
@@ -116,11 +116,11 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "AdaptQuiz turns any PDF into an adaptive quiz session grounded entirely in that document. It chunks and embeds the source locally, generates questions from retrieved context so nothing can be hallucinated, then grades free-text answers with GPT-4o against a three-criterion rubric — accuracy, completeness, terminology — awarding partial credit and tagging the specific knowledge gap behind each wrong answer.",
+        text: "AdaptQuiz turns any PDF into an adaptive quiz session grounded entirely in that document. It chunks and embeds the source locally, generates questions from retrieved context so nothing can be hallucinated, then grades free-text answers with GPT-4o against a three-criterion rubric of accuracy, completeness and terminology, awarding partial credit and tagging the specific knowledge gap behind each wrong answer.",
       },
       {
         type: "say",
-        text: "The evaluation layer is the interesting part. String-matching a student's answer marks correct reasoning wrong because the wording differed. A rubric produces a defensible score and the feedback that makes the score useful — the same technique used in reward modelling.",
+        text: "The evaluation layer is the interesting part. String-matching a student's answer marks correct reasoning wrong because the wording differed. A rubric produces a defensible score and the feedback that makes the score useful. It is the same technique used in reward modelling.",
       },
       { type: "projects", slugs: ["adaptquiz"] },
     ],
@@ -133,7 +133,7 @@ export const consoleTurns: ConsoleTurn[] = [
       { type: "tool", call: "get_skills()", result: "5 groups" },
       {
         type: "say",
-        text: "Applied, and shipped rather than studied. RAG end to end — chunking, local sentence-transformer embeddings, FAISS and Pinecone vector stores, retrieval strategy. Structured outputs with enforced JSON schemas. Tool calling and agent orchestration with LangGraph. Tracing and evaluation with Braintrust. And LLM-as-judge rubric scoring, which is the part most portfolios skip entirely.",
+        text: "Applied, and shipped rather than studied. RAG end to end: chunking, local sentence-transformer embeddings, FAISS and Pinecone vector stores, retrieval strategy. Structured outputs with enforced JSON schemas. Tool calling and agent orchestration with LangGraph. Tracing and evaluation with Braintrust. And LLM-as-judge rubric scoring, which is the part most portfolios skip entirely.",
       },
       { type: "skills" },
     ],
@@ -146,28 +146,28 @@ export const consoleTurns: ConsoleTurn[] = [
       { type: "tool", call: "get_experience()", result: "2 records · current role" },
       {
         type: "say",
-        text: "She is a software engineer intern at Manrke, and it is real production work: distributed, event-driven microservices on AWS — Lambda, ECS, Step Functions, SQS/SNS, DynamoDB, RDS — behind an end-to-end document-automation platform. She owns systems across the whole lifecycle, from architecture through containerised deploys to ECR and Lambda across multiple AWS accounts, to live production debugging.",
+        text: "She is a software engineer intern at Manrke, and it is real production work: distributed, event-driven microservices on AWS (Lambda, ECS, Step Functions, SQS/SNS, DynamoDB, RDS) behind an end-to-end document-automation platform. She owns systems across the whole lifecycle, from architecture through containerised deploys to ECR and Lambda across multiple AWS accounts, to live production debugging.",
       },
       {
         type: "say",
-        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation — with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
+        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation, with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
       },
       { type: "experience" },
     ],
   },
   {
     id: "teaching",
-    prompt: "She taught for years — what has that got to do with engineering?",
+    prompt: "She taught for years. What has that got to do with engineering?",
     steps: [
       { type: "thought", text: "Retrieving experience record" },
       { type: "tool", call: "get_experience(kind='freelance')", result: "1 record · 6+ years" },
       {
         type: "say",
-        text: "Everything, in her case. Years spent teaching maths and coding to students in the US, UK and Canada means years watching precisely how people fail at things — which wrong answers signal a real misconception and which are a slip, and what feedback actually changes the next attempt.",
+        text: "Everything, in her case. Years spent teaching maths and coding to students in the US, UK and Canada means years watching precisely how people fail at things: which wrong answers signal a real misconception and which are a slip, and what feedback actually changes the next attempt.",
       },
       {
         type: "say",
-        text: "That is the entire design brief for AdaptQuiz's grader. The rubric, the partial credit, the knowledge-gap tagging — those are not features she found in a tutorial. They are what she already knew good assessment requires. It also means she can explain a hard system clearly to someone who does not already understand it, which turns out to matter a lot on an engineering team.",
+        text: "That is the entire design brief for AdaptQuiz's grader. The rubric, the partial credit, the knowledge-gap tagging: none of those are features she found in a tutorial. They are what she already knew good assessment requires. It also means she can explain a hard system clearly to someone who does not already understand it, which turns out to matter a lot on an engineering team.",
       },
       { type: "experience" },
     ],
@@ -194,7 +194,7 @@ export const consoleTurns: ConsoleTurn[] = [
       { type: "tool", call: "get_current_focus()", result: "ok" },
       {
         type: "say",
-        // TODO(ila): keep this current — a stale answer here is worse than none.
+        // TODO(ila): keep this current. A stale answer here is worse than none.
         text: "Deepening the agent side of the work: evaluation harnesses for multi-step agents, retrieval quality measurement, and getting Davis's outreach pipeline reliable enough to judge honestly rather than demo well.",
       },
     ],

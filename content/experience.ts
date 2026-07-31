@@ -4,7 +4,7 @@ import type { Experience } from "./types";
  * Order matters: the internship leads, the teaching sits under it as real
  * freelance experience and the origin story behind AdaptQuiz.
  *
- * Anything still marked TODO is hidden from visitors automatically — see
+ * Anything still marked TODO is hidden from visitors automatically. See
  * `components/sections/experience.tsx`. Fill these in and the section grows.
  */
 
@@ -15,19 +15,19 @@ export const experience: Experience[] = [
     role: "Software Engineer Intern",
     org: "Manrke",
     kind: "Internship · Remote",
-    period: "April 2026 — Present",
+    period: "April 2026 – Present",
     location: "Remote",
     summary:
-      "Building distributed, event-driven microservices on AWS behind an end-to-end document-automation platform — with LLMs integrated into the production pipelines, not bolted on beside them.",
+      "Building distributed, event-driven microservices on AWS behind an end-to-end document-automation platform, with LLMs integrated into the production pipelines rather than bolted on beside them.",
     points: [
-      "Design and build distributed, event-driven microservices on AWS — Lambda, ECS, Step Functions, SQS/SNS, S3, DynamoDB and RDS — powering an end-to-end document-automation platform.",
+      "Design and build distributed, event-driven microservices on AWS (Lambda, ECS, Step Functions, SQS/SNS, S3, DynamoDB and RDS) powering an end-to-end document-automation platform.",
       "Own systems across the full lifecycle: architecture, implementation, containerised deployment to ECR and Lambda across multiple AWS accounts, monitoring, and live production debugging.",
       "Integrate LLMs into production pipelines for extraction, classification and natural-language generation, with guardrails, deterministic fallbacks, and cost and latency controls.",
       "Engineer for reliability at scale: idempotent processing, exactly-once semantics, distributed state coordination, and graceful failure handling across asynchronous services.",
-      "Drive observability and operations — structured logging, correlation-ID tracing through CloudWatch, and alerting that surfaces and diagnoses issues quickly.",
-      // TODO(ila): one number would make this section undeniable — documents processed
-      // per day, latency, error rate before/after, or accounts and services owned.
-      "TODO — one accomplishment with a metric: throughput handled, latency, error rate improved, or scale owned.",
+      "Drive observability and operations through structured logging, correlation-ID tracing in CloudWatch, and alerting that surfaces and diagnoses issues quickly.",
+      // TODO(ila): one number would make this section undeniable. Documents processed
+      // per day, latency, error rate before and after, or accounts and services owned.
+      "TODO: one accomplishment with a metric, such as throughput handled, latency, error rate improved, or scale owned.",
     ],
     tags: [
       "AWS",
@@ -44,14 +44,14 @@ export const experience: Experience[] = [
     period: "6+ years",
     location: "Students in the US, UK and Canada",
     summary:
-      "Years teaching mathematics and coding to international students — the work that funded a deliberate move into engineering, and the reason AdaptQuiz grades against a rubric instead of matching strings.",
+      "Years teaching mathematics and coding to international students. It funded a deliberate move into engineering, and it is the reason AdaptQuiz grades against a rubric instead of matching strings.",
     points: [
       "Taught mathematics and programming one-to-one to students across three countries and several curricula, adapting explanations to where each student's understanding actually broke.",
-      "Marking thousands of free-text answers is where AdaptQuiz's grader comes from: partial credit, per-criterion feedback and knowledge-gap tagging are what good assessment requires, not features found in a tutorial.",
+      "Marking thousands of free-text answers is where AdaptQuiz's grader comes from. Partial credit, per-criterion feedback and knowledge-gap tagging are what good assessment requires, not features found in a tutorial.",
       // TODO(ila): the specifics turn this from good to undeniable.
-      "TODO — roughly how many students, over what period, and which age range?",
-      "TODO — the exact certification name and its issuing body, if you want it named.",
-      "TODO — anything measurable: ratings, retention, repeat clients, exam results.",
+      "TODO: roughly how many students, over what period, and which age range?",
+      "TODO: the exact certification name and its issuing body, if you want it named.",
+      "TODO: anything measurable, such as ratings, retention, repeat clients or exam results.",
     ],
     tags: [
       "Mathematics",
