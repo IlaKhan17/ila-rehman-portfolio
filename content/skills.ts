@@ -35,7 +35,7 @@ export const skills: SkillGroup[] = [
       "FastAPI",
       "REST API Design",
       "Pydantic",
-      "SQLAlchemy / Alembic",
+      "SQLAlchemy / SQLModel / Alembic",
       "PostgreSQL",
       "Supabase",
       "DynamoDB",

@@ -150,7 +150,7 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation, with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. She also built a multi-tenant AI travel agent there, running over WhatsApp against live flight inventory, where Braintrust traces exposed a 56% tool-call failure rate that logs had missed entirely. Grounding relative dates in code and falling back to a stronger model on the calls that failed removed it, and the service now carries 274 tests under mypy --strict. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
+        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation, with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. She also built a multi-tenant WhatsApp travel-booking agent there, running against live flight inventory, where Braintrust traces exposed a 56% tool-call failure rate that logs had missed entirely. Grounding relative dates in code and falling back to a stronger model on the calls that failed removed it, and the service now carries 274 tests under mypy --strict. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
       },
       { type: "experience" },
     ],
@@ -195,7 +195,7 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "say",
         // TODO(ila): keep this current. A stale answer here is worse than none.
-        text: "Her day job at Manrke: the document-automation platform, plus a multi-tenant AI travel agent on WhatsApp. Distributed, event-driven microservices on AWS, and the work of making LLM steps inside those pipelines behave predictably. Guardrails, deterministic fallbacks, cost and latency controls, and the reliability side that decides whether any of it can be trusted at scale, meaning idempotent processing, exactly-once semantics and correlation-ID tracing that lets you follow one document through a dozen asynchronous services.",
+        text: "Her day job at Manrke: the document-automation platform, plus a multi-tenant WhatsApp travel-booking agent. Distributed, event-driven microservices on AWS, and the work of making LLM steps inside those pipelines behave predictably. Guardrails, deterministic fallbacks, cost and latency controls, and the reliability side that decides whether any of it can be trusted at scale, meaning idempotent processing, exactly-once semantics and correlation-ID tracing that lets you follow one document through a dozen asynchronous services.",
       },
       {
         type: "say",
