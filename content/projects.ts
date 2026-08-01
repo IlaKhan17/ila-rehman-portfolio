@@ -21,7 +21,7 @@ export const projects: Project[] = [
       "        ↓",
       "FastAPI · 68 endpoints across 17 routers",
       "  ├── LangGraph   multi-stage research → signal extraction → draft",
-      "  ├── Groq        LLM inference",
+      "  ├── OpenAI      LLM inference",
       "  ├── Pinecone    per-workspace namespaces, vector memory",
       "  ├── Python      deterministic scorer, 6 dimensions summing to 100",
       "  └── Braintrust  tracing over the whole pipeline",
@@ -33,6 +33,8 @@ export const projects: Project[] = [
     ],
     highlights: [
       "Every prospect score cites its evidence (source URL, snippet and observed-at timestamp), so a number can always be audited back to what the agent actually saw.",
+      "Drafting context is restricted to a human-approved claims table, so unverified personalisation is unreachable by construction rather than discouraged by a prompt.",
+      "Research runs over web search plus Pinecone retrieval, and scoring is explainable enough that a rep can see exactly why a lead ranked where it did.",
       "Scoring splits into an LLM signal-extraction stage and a deterministic Python scorer across 6 weighted dimensions summing to 100, so identical inputs produce byte-identical, unit-testable scores.",
       "Approval-first send pipeline (pending → approved → sent) with a six-rule policy guard, and a unique idempotency key that makes duplicate sends impossible.",
       "Multi-tenant isolation enforced by 40 row-level-security policies across 45 Postgres tables, with 0 tables left unprotected.",
@@ -74,10 +76,10 @@ export const projects: Project[] = [
           "Missing an opt-out is not a quality regression, it is a compliance failure and a person who asked to be left alone being contacted again. Of the 12 intents the reply classifier handles, that is the one where a single miss is unacceptable, so the release fails rather than the metric dipping quietly on a chart nobody opens.",
       },
       {
-        choice: "Groq for inference",
-        insteadOf: "A frontier model on every call",
+        choice: "Draft only from a human-approved claims table",
+        insteadOf: "Telling the model in the prompt not to invent things",
         because:
-          "The pipeline makes many calls per prospect. Latency and cost per prospect are the binding constraints on whether the system is usable at all, and most stages, such as signal extraction from a page of text, do not need frontier-level reasoning.",
+          "A prompt instruction is a request, and the one time it is ignored, a false claim about a prospect's company goes out over a real person's name. Restricting the drafting context to claims a human has approved makes unverified personalisation unreachable by construction: the model cannot state something it was never given.",
       },
     ],
     tech: [
@@ -86,7 +88,7 @@ export const projects: Project[] = [
       "TypeScript",
       "FastAPI",
       "LangGraph",
-      "Groq",
+      "OpenAI",
       "Supabase",
       "Postgres / RLS",
       "Pinecone",

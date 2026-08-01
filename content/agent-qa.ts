@@ -91,7 +91,7 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "Davis is an evidence-grounded AI sales development agent. It finds prospects, researches them, and drafts personalised outreach, and every prospect score cites a source URL, a snippet and an observed-at timestamp, so a salesperson can check what the agent actually saw instead of trusting a bare number.",
+        text: "Davis is an evidence-grounded AI sales development agent. It researches prospects over web search and Pinecone retrieval, then drafts outreach, and every prospect score cites a source URL, a snippet and an observed-at timestamp, so a salesperson can check what the agent actually saw instead of trusting a bare number. Drafting only ever sees a human-approved claims table, which makes an invented claim about a prospect unreachable rather than merely discouraged.",
       },
       {
         type: "say",
@@ -99,7 +99,7 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "Next.js on Vercel, FastAPI on Railway, LangGraph for the multi-stage workflow, Groq for inference, Supabase for auth and Postgres, and Braintrust tracing over the whole pipeline.",
+        text: "Next.js on Vercel, FastAPI on Railway, LangGraph for the multi-stage workflow, OpenAI for inference, Supabase for auth and Postgres, and Braintrust tracing over the whole pipeline.",
       },
       { type: "projects", slugs: ["davis"] },
     ],
