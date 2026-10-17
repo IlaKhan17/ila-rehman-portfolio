@@ -111,6 +111,80 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "proofstep",
+    name: "Proofstep",
+    blurb: "Evaluation CI for production AI agents",
+    featured: true,
+    year: "2026",
+    problem:
+      "Most eval tools score an agent's final output, but agents fail in the middle. An agent can write a flawless email and still have sent it before a human approved it, and no output evaluator can see that. And most CI gates fire on noise: a threshold says what size of change matters, but not whether the change is real, so a small eval suite passes or fails on sampling luck while the build stays green.",
+    built:
+      "An evaluation CI platform that answers the question a dashboard cannot: should this change be allowed to merge? It grades the full tool-call trajectory (order, arguments, budgets, loops and duplicate side effects) against policy-as-code YAML rules, attributes every failure to its offending span, and gates merges with statistical tests rather than bare thresholds. Self-hostable, multi-tenant, and published to PyPI as a tracing SDK and a CLI.",
+    architecture: [
+      "Your agent + proofstep SDK · @trace / @tool decorators",
+      "        ↓  OpenTelemetry ingestion",
+      "Proofstep server · Python 3.12",
+      "  ├── PostgreSQL  multi-tenant, row-level security",
+      "  ├── Redis",
+      "  └── MinIO",
+      "        ↓",
+      "proofstep-cli in GitHub Actions",
+      "  exit 0 merge · exit 1 regressed · exit 2 run too small",
+    ],
+    highlights: [
+      "Evaluates the trajectory, not the output: the ordered tool calls, their arguments and the state they left behind.",
+      "Policies are written as reviewable YAML, so a rule like 'never send before approval' lives in a PR diff instead of a prompt.",
+      "Every failure names its offending span, with what was expected and what was observed.",
+      "Gates are statistically honest: paired bootstrap and McNemar tests against a managed baseline, with Holm correction across metrics.",
+      "A run too small to detect the regression it guards is an error, not a pass on noise.",
+      "Evaluator calibration with Cohen's κ against human labels, not raw agreement.",
+      "Self-hostable and multi-tenant with row-level security, no licence key and no hosted control plane.",
+      "Published 2 packages to PyPI and 10 reference suites, where 60% of metrics are deterministic or statistical rather than LLM-judged.",
+    ],
+    decisions: [
+      {
+        choice: "Grade the tool-call trajectory",
+        insteadOf: "Scoring only the agent's final output",
+        because:
+          "The failures that matter in a tool-using agent happen in the middle: an email sent before approval, a document read from the wrong tenant. The final output can be byte-identical between a safe run and a dangerous one, so only the trajectory can tell them apart.",
+      },
+      {
+        choice: "Paired statistical tests with an explicit power check",
+        insteadOf: "A fixed score threshold",
+        because:
+          "A threshold says how big a change matters, not whether it is real. At forty examples a gate guarding a 0.02 regression can only detect around 0.1, so it is effectively firing on noise. Erroring on an underpowered run makes that visible instead of letting a green build lie.",
+      },
+      {
+        choice: "Policy-as-code in YAML",
+        insteadOf: "Rules buried in evaluator code or prompts",
+        because:
+          "A policy that decides whether code can merge should be reviewable by whoever changes it. YAML rules show up in the PR diff, and each violation points back to the exact policy line it broke.",
+      },
+    ],
+    tech: [
+      "Python",
+      "PostgreSQL / RLS",
+      "Redis",
+      "MinIO",
+      "OpenTelemetry",
+      "Docker",
+      "GitHub Actions",
+      "PyPI",
+    ],
+    links: [
+      {
+        label: "Live demo",
+        href: "https://proofstep.ilarehman.com",
+        kind: "demo",
+      },
+      {
+        label: "Source",
+        href: "https://github.com/IlaKhan17/proofstep",
+        kind: "source",
+      },
+    ],
+  },
+  {
     slug: "adaptquiz",
     name: "AdaptQuiz API",
     blurb: "RAG quiz generation with LLM-as-judge grading",

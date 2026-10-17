@@ -28,11 +28,11 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "tool",
         call: "search_projects(featured=true)",
-        result: "2 results · Davis, AdaptQuiz API",
+        result: "3 results · Davis, Proofstep, AdaptQuiz API",
       },
       {
         type: "say",
-        text: "Because she has already shipped the thing most junior candidates only describe. AdaptQuiz is a production RAG API with retrieval grounding, structured outputs and an LLM-as-judge evaluation layer. Davis is a multi-tenant AI sales agent across 68 endpoints where every score cites its evidence, sending is approval-gated, and 40 row-level-security policies cover all 45 Postgres tables. Both are deployed, both are open source, and the code is legible.",
+        text: "Because she has already shipped the thing most junior candidates only describe. Proofstep is an evaluation CI platform for AI agents that grades the full tool-call trajectory and refuses to pass a run too small to detect a regression. AdaptQuiz is a production RAG API with retrieval grounding, structured outputs and an LLM-as-judge evaluation layer. Davis is a multi-tenant AI sales agent across 68 endpoints where every score cites its evidence, sending is approval-gated, and 40 row-level-security policies cover all 45 Postgres tables. All three are deployed, all three are open source, and the code is legible.",
       },
       {
         type: "say",
@@ -40,9 +40,9 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "And it is not only side projects. She currently builds distributed, event-driven microservices on AWS with LLMs integrated into the production pipelines. That means guardrails, deterministic fallbacks and exactly-once semantics: the reliability work side projects never force you to learn. First Class Physics honours underneath that, and years teaching maths and code across the US, UK and Canada: the evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
+        text: "First Class Physics honours underneath that, and years teaching maths and code across the US, UK and Canada: the evaluation work in AdaptQuiz is what happens when someone who has actually graded thousands of answers builds a grader.",
       },
-      { type: "projects", slugs: ["davis", "adaptquiz"] },
+      { type: "projects", slugs: ["davis", "proofstep", "adaptquiz"] },
     ],
   },
   {
@@ -57,7 +57,7 @@ export const consoleTurns: ConsoleTurn[] = [
       },
       {
         type: "say",
-        text: "Physics first, then years of teaching, then an MCA, and now shipping production systems as a software engineer. Each step fed the next.",
+        text: "Physics first, then years of teaching, then an MCA, and now shipping AI systems of her own. Each step fed the next.",
       },
       { type: "education" },
     ],
@@ -70,13 +70,13 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "tool",
         call: "search_projects()",
-        result: "3 results",
+        result: "4 results",
       },
       {
         type: "say",
-        text: "Three shipped projects, in order of depth:",
+        text: "Four shipped projects, in order of depth:",
       },
-      { type: "projects", slugs: ["davis", "adaptquiz", "focus-flow"] },
+      { type: "projects", slugs: ["davis", "proofstep", "adaptquiz", "focus-flow"] },
     ],
   },
   {
@@ -102,6 +102,27 @@ export const consoleTurns: ConsoleTurn[] = [
         text: "Next.js on Vercel, FastAPI on Railway, LangGraph for the multi-stage workflow, OpenAI for inference, Supabase for auth and Postgres, and Braintrust tracing over the whole pipeline.",
       },
       { type: "projects", slugs: ["davis"] },
+    ],
+  },
+  {
+    id: "proofstep",
+    prompt: "Tell me about Proofstep",
+    steps: [
+      { type: "thought", text: "Loading case study", detail: "proofstep" },
+      {
+        type: "tool",
+        call: "get_project('proofstep')",
+        result: "ok · 2 PyPI packages · 10 reference suites",
+      },
+      {
+        type: "say",
+        text: "Proofstep is evaluation CI for production AI agents. It answers the question a dashboard cannot: should this change be allowed to merge? Instead of scoring the final output, it grades the whole tool-call trajectory against policy-as-code YAML rules, so an agent that wrote a perfect email but sent it before human approval still fails, and the failure names the exact span that broke the rule.",
+      },
+      {
+        type: "say",
+        text: "The part she would want you to ask about: the gates are statistically honest. Paired bootstrap and McNemar tests against a baseline, Holm correction across metrics, and an error, not a pass, when a run is too small to detect the regression it claims to guard. 60% of the metrics in its 10 reference suites are deterministic or statistical rather than LLM-judged. It is self-hostable and multi-tenant with row-level security, ingests OpenTelemetry traces, and ships as two PyPI packages.",
+      },
+      { type: "projects", slugs: ["proofstep"] },
     ],
   },
   {
@@ -139,23 +160,6 @@ export const consoleTurns: ConsoleTurn[] = [
     ],
   },
   {
-    id: "internship",
-    prompt: "What does she do in production?",
-    steps: [
-      { type: "thought", text: "Retrieving experience records" },
-      { type: "tool", call: "get_experience()", result: "2 records · current role" },
-      {
-        type: "say",
-        text: "She is a software engineer intern at Manrke, and it is real production work: distributed, event-driven microservices on AWS (Lambda, ECS, Step Functions, SQS/SNS, DynamoDB, RDS) behind an end-to-end document-automation platform. She owns systems across the whole lifecycle, from architecture through containerised deploys to ECR and Lambda across multiple AWS accounts, to live production debugging.",
-      },
-      {
-        type: "say",
-        text: "The part that matters for an AI role: she integrates LLMs into those pipelines for extraction, classification and generation, with guardrails, deterministic fallbacks when the model misbehaves, and explicit cost and latency controls. She also built a multi-tenant WhatsApp travel-booking agent there, running against live flight inventory, where Braintrust traces exposed a 56% tool-call failure rate that logs had missed entirely. Grounding relative dates in code and falling back to a stronger model on the calls that failed removed it, and the service now carries 274 tests under mypy --strict. Plus the unglamorous reliability work that makes async systems trustworthy: idempotent processing, exactly-once semantics, distributed state coordination, and correlation-ID tracing through CloudWatch.",
-      },
-      { type: "experience" },
-    ],
-  },
-  {
     id: "teaching",
     prompt: "She taught for years. What has that got to do with engineering?",
     steps: [
@@ -169,7 +173,6 @@ export const consoleTurns: ConsoleTurn[] = [
         type: "say",
         text: "That is the entire design brief for AdaptQuiz's grader. The rubric, the partial credit, the knowledge-gap tagging: none of those are features she found in a tutorial. They are what she already knew good assessment requires. It also means she can explain a hard system clearly to someone who does not already understand it, which turns out to matter a lot on an engineering team.",
       },
-      { type: "experience" },
     ],
   },
   {
@@ -181,7 +184,7 @@ export const consoleTurns: ConsoleTurn[] = [
       {
         type: "say",
         // TODO(ila): replace with 2–3 sentences in Ila's own voice.
-        text: "It reads as a switch, but it is closer to a straight line: physics for the quantitative foundation, years of teaching to fund a deliberate move and sharpen how she explains hard things, an MCA covering software engineering, data science, cloud computing and machine learning for the engineering itself, and now production systems that use all three.",
+        text: "It reads as a switch, but it is closer to a straight line: physics for the quantitative foundation, years of teaching to fund a deliberate move and sharpen how she explains hard things, an MCA covering software engineering, data science, cloud computing and machine learning for the engineering itself, and now AI systems that use all three.",
       },
       { type: "education" },
     ],
@@ -191,17 +194,13 @@ export const consoleTurns: ConsoleTurn[] = [
     prompt: "What is she working on now?",
     steps: [
       { type: "thought", text: "Checking recent activity" },
-      { type: "tool", call: "get_current_focus()", result: "ok · current role" },
+      { type: "tool", call: "get_current_focus()", result: "ok" },
       {
         type: "say",
         // TODO(ila): keep this current. A stale answer here is worse than none.
-        text: "Her day job at Manrke: the document-automation platform, plus a multi-tenant WhatsApp travel-booking agent. Distributed, event-driven microservices on AWS, and the work of making LLM steps inside those pipelines behave predictably. Guardrails, deterministic fallbacks, cost and latency controls, and the reliability side that decides whether any of it can be trusted at scale, meaning idempotent processing, exactly-once semantics and correlation-ID tracing that lets you follow one document through a dozen asynchronous services.",
+        text: "Evaluation. The thread running through her own projects is eval suites, traces and CI gates that measure whether an agent changed for the better instead of assuming it did, and Proofstep is where that thread now lives: trajectory testing, policy-as-code, and statistically honest merge gates for production AI agents.",
       },
-      {
-        type: "say",
-        text: "Outside that, the thread running through her own projects is evaluation: eval suites, traces and CI gates that measure whether an agent changed for the better instead of assuming it did.",
-      },
-      { type: "experience" },
+      { type: "projects", slugs: ["proofstep"] },
     ],
   },
   {

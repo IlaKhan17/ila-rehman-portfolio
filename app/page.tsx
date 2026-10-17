@@ -2,7 +2,6 @@ import { AgentConsole } from "@/components/console/agent-console";
 import { About } from "@/components/sections/about";
 import { Contact } from "@/components/sections/contact";
 import { EducationSection } from "@/components/sections/education";
-import { ExperienceSection } from "@/components/sections/experience";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
 import { StructuredData } from "@/components/site/structured-data";
@@ -49,7 +48,6 @@ export default function Home() {
         <AgentConsole />
 
         <About />
-        <ExperienceSection />
         <Projects />
         <Skills />
         <EducationSection />
